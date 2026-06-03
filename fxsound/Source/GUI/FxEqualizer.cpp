@@ -112,6 +112,9 @@ void FxEqualizer::reinit(int num_bands)
     resized();
 
     FxController::getInstance().undoPreset();
+    // Sync slider positions from DSP now that the preset is reloaded, so the
+    // graph reflects actual band values immediately rather than showing 0 dB.
+    update();
 }
 
 void FxEqualizer::sliderValueChanged(Slider* slider)
