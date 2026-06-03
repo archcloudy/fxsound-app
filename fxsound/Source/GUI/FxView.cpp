@@ -73,14 +73,20 @@ void FxView::showErrorNotification(bool show)
 
 void FxView::comboBoxChanged(ComboBox* combobox)
 {
-	auto index = combobox->getSelectedItemIndex();
-	if (index >= 0 && index < combobox->getNumItems())
+	if (combobox == &preset_list_)
 	{
-		if (combobox == &preset_list_)
+		// getSelectedItemIndex() includes separator rows in its count, so use
+		// the item ID instead. Items are added with id = model_index + 1.
+		auto id = combobox->getSelectedId();
+		if (id > 0)
 		{
-			FxController::getInstance().setPreset(index);
+			FxController::getInstance().setPreset(id - 1);
 		}
-		else if (combobox == &endpoint_list_)
+	}
+	else if (combobox == &endpoint_list_)
+	{
+		auto index = combobox->getSelectedItemIndex();
+		if (index >= 0 && index < combobox->getNumItems())
 		{
 			FxController::getInstance().setOutput(index, false);
 		}
