@@ -133,6 +133,7 @@ FxController::FxController()
 	dfx_enabled_ = true;
 	authenticated_ = true;
 	minimize_tip_ = true;
+	silent_mode_ = false;
 
 	hotkeys_registered_ = false;
 	output_changed_ = false;
@@ -227,6 +228,9 @@ FxController::~FxController()
 void FxController::config(const String& commandline)
 {
     auto arg_list = ArgumentList(File::getSpecialLocation(File::SpecialLocationType::invokedExecutableFile).getFileName(), commandline);
+
+    if (arg_list.containsOption("--silent"))
+        silent_mode_ = true;
 
     auto preset = arg_list.getValueForOption("--preset").unquoted();
     auto view = arg_list.getValueForOption("--view");
@@ -412,7 +416,7 @@ void FxController::init(FxMainWindow* main_window, FxSystemTrayView* system_tray
 
         survey_tip_ = !settings_.getBool("survey_displayed");
         
-        if (!settings_.getBool("run_minimized"))
+        if (!settings_.getBool("run_minimized") && !silent_mode_)
         {
             showMainWindow();
         }

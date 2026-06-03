@@ -277,6 +277,7 @@ private:
 
 	bool minimize_tip_;
 	bool survey_tip_;
+	bool silent_mode_;
 	int max_user_presets_;
 
 	DWORD session_id_;
