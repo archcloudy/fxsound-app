@@ -50,7 +50,7 @@ jobs:
             libasound2-dev \
             libglib2.0-dev \
             libpipewire-0.3-dev \
-            libxcb-dev libxcb-keysyms1-dev
+            libxcb1-dev libxcb-keysyms1-dev
 
       - name: Configure
         run: |
